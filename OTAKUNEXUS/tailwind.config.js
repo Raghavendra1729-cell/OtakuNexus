@@ -1,4 +1,8 @@
 module.exports = {
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+    // ...existing paths...
+  ],
   theme: {
     extend: {
       animation: {
@@ -12,5 +16,8 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/line-clamp'),
+    // ...other plugins...
+  ],
 };
