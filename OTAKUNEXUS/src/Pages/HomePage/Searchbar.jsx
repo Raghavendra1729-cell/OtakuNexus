@@ -1,36 +1,46 @@
 import axios from 'axios';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 function Searchbar() {
   const [input, setInput] = useState("");
   const [result, setResult] = useState([]);
-  const timer = useRef();
-
-  const handleSearch = (value) => {
-    setInput(value);
-  };
+  const [timer, setTimer] = useState(null);
 
   useEffect(() => {
-    if (timer.current) {
-      clearTimeout(timer.current);
-    }
+    setTimeout(() => {
+      axios.get("https://api.jikan.moe/v4/top/anime")
+        .then((res) => {
+          setResult(res.data.data?.slice(0, 5) || []);
+        })
+        .catch((err) => {
+          console.error("Failed to fetch top anime");
+        });
+    }, 2000); 
+  }, []);
 
-    timer.current = setTimeout(async () => {
-      try {
-        const url = input === "" 
-          ? "https://api.jikan.moe/v4/top/anime" 
-          : `https://api.jikan.moe/v4/anime?q=${input}&sfw`;
-        
-        const response = await axios.get(url);
-        setResult(response.data.data?.slice(0, 5) || []);
-      } catch (error) {
-        console.error("Error fetching anime:", error);
-        setResult([]);
+  const handleSearch = (searchText) => {
+    setInput(searchText);
+    clearTimeout(timer);
+
+    const newTimer = setTimeout(() => {
+      if (!searchText.trim()) {
+        axios.get("https://api.jikan.moe/v4/top/anime")
+          .then((res) => {
+            setResult(res.data.data?.slice(0, 5) || []);
+          })
+          .catch((err) => console.error(err));
+        return;
       }
-    }, 500);
 
-    return () => clearTimeout(timer.current);
-  }, [input]);
+      axios.get(`https://api.jikan.moe/v4/anime?q=${searchText}&sfw`)
+        .then((res) => {
+          setResult(res.data.data?.slice(0, 5) || []);
+        })
+        .catch((err) => console.error(err));
+    }, 1000); 
+
+    setTimer(newTimer);
+  };
 
   return (
     <div className="w-full h-[70vh] bg-gradient-to-br from-slate-900 via-slate-800 to-gray-900 
