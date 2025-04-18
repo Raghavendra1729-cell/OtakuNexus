@@ -63,14 +63,52 @@ function Sliding() {
               </div>
             </div>
 
-            <div className="w-1/2 h-full overflow-hidden flex items-center justify-center p-6">
-              <img
-                src={filterList[index].images.jpg.large_image_url}
-                alt={filterList[index].title}
-                className="w-[90%] h-[90%] object-cover rounded-xl shadow-2xl 
-                        transform hover:scale-105 transition-all duration-700 
-                        border border-slate-600/30 shadow-blue-500/10"
-              />
+            <div className="w-1/2 h-full flex flex-col">
+              <div className="h-[80%] w-[100%]relative flex items-center justify-center">
+                <img
+                  src={filterList[index].images.jpg.large_image_url}
+                  alt={filterList[index].title}
+                  className="w-full h-full object-contain rounded-tr-xl"
+                  loading="lazy"
+                />
+              </div>
+
+              <div className="h-[30%] bg-slate-900/60 backdrop-blur-sm p-4 rounded-br-xl">
+                <div className="grid grid-cols-2 gap-4 mb-3">
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-slate-300 text-sm">Status:</span>
+                      <span className="text-blue-400 text-sm font-medium">{filterList[index].status}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-slate-300 text-sm">Year:</span>
+                      <span className="text-blue-400 text-sm font-medium">{filterList[index].year || 'N/A'}</span>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-slate-300 text-sm">Rating:</span>
+                      <span className="text-blue-400 text-sm font-medium">{filterList[index].rating || 'N/A'}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-slate-300 text-sm">Source:</span>
+                      <span className="text-blue-400 text-sm font-medium">{filterList[index].source || 'N/A'}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap gap-2">
+                  {filterList[index].genres.map((genre) => (
+                    <span
+                      key={genre.mal_id}
+                      className="px-3 py-1 text-xs bg-blue-950/50 text-blue-200 
+                               rounded-full border border-blue-500/20"
+                    >
+                      {genre.name}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         )}
