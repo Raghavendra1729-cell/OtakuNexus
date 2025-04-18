@@ -1,46 +1,36 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 function Searchbar() {
   const [input, setInput] = useState("");
   const [result, setResult] = useState([]);
-  const [timer, setTimer] = useState(null);
+  const timer = useRef();
+
+  const handleSearch = (value) => {
+    setInput(value);
+  };
 
   useEffect(() => {
-    setTimeout(() => {
-      axios.get("https://api.jikan.moe/v4/top/anime")
-        .then((res) => {
-          setResult(res.data.data?.slice(0, 5) || []);
-        })
-        .catch((err) => {
-          console.error("Failed to fetch top anime");
-        });
-    }, 500);
-  }, []);
+    if (timer.current) {
+      clearTimeout(timer.current);
+    }
 
-  const handleSearch = (searchText) => {
-    setInput(searchText);
-    clearTimeout(timer);
-
-    const newTimer = setTimeout(() => {
-      if (!searchText.trim()) {
-        axios.get("https://api.jikan.moe/v4/top/anime")
-          .then((res) => {
-            setResult(res.data.data?.slice(0, 5) || []);
-          })
-          .catch((err) => console.error(err));
-        return;
+    timer.current = setTimeout(async () => {
+      try {
+        const url = input === "" 
+          ? "https://api.jikan.moe/v4/top/anime" 
+          : `https://api.jikan.moe/v4/anime?q=${input}&sfw`;
+        
+        const response = await axios.get(url);
+        setResult(response.data.data?.slice(0, 5) || []);
+      } catch (error) {
+        console.error("Error fetching anime:", error);
+        setResult([]);
       }
-
-      axios.get(`https://api.jikan.moe/v4/anime?q=${searchText}&sfw`)
-        .then((res) => {
-          setResult(res.data.data?.slice(0, 5) || []);
-        })
-        .catch((err) => console.error(err));
     }, 500);
 
-    setTimer(newTimer);
-  };
+    return () => clearTimeout(timer.current);
+  }, [input]);
 
   return (
     <div className="w-full h-[70vh] bg-gradient-to-br from-slate-900 via-slate-800 to-gray-900 
