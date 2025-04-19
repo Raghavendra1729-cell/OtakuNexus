@@ -61,25 +61,38 @@ function ListAnime() {
   const [listAnime, setListAnime] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
+  const [isActive, setIsActive] = useState(true); 
 
   const fetchAnimeList = (pageNum) => {
     setLoading(true);
-    setTimeout(() => {
-      axios.get(`https://api.jikan.moe/v4/top/anime?page=${pageNum}`)
-        .then((res) => {
-          setListAnime(res.data.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.error("Failed to fetch anime list:", err);
-          setTimeout(() => fetchAnimeList(pageNum), 5000);
-        });
+    
+    const timeoutId = setTimeout(() => {
+      if (isActive) {
+        axios.get(`https://api.jikan.moe/v4/top/anime?page=${pageNum}`)
+          .then((res) => {
+            if (isActive) { 
+              setListAnime(res.data.data);
+              setLoading(false);
+            }
+          })
+          .catch((err) => {
+            console.error("Failed to fetch anime list:", err);
+            if (isActive) setLoading(false);
+          });
+      }
     }, 1000);
+
+    return () => clearTimeout(timeoutId);
   };
 
   useEffect(() => {
-    fetchAnimeList(page);
-    return () => setLoading(false);
+    setIsActive(true);
+    const cleanup = fetchAnimeList(page);
+
+    return () => {
+      setIsActive(false); 
+      cleanup();
+    };
   }, [page]);
 
   return (

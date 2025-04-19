@@ -22,7 +22,7 @@ function Sliding() {
               .catch((err) => console.error("Retry failed:", err));
           }, 1000);
         });
-    }, 500);
+    }, 150);
 
     return () => clearTimeout(timer);
   }, []);
@@ -30,7 +30,7 @@ function Sliding() {
   useEffect(() => {
     const interval = setInterval(() => {
       setindex((index) => (index + 1) % list.length);
-    }, 7000);
+    }, 4000);
     return () => clearInterval(interval);
   }, [list]);
 
