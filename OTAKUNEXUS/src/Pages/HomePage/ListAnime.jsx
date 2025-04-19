@@ -1,24 +1,56 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
+import { FavContext } from '../../App';
 
 function Card({ anime }) {
+  const { favAnime, setFavAnime } = useContext(FavContext);
+
+  const isLiked = favAnime.filter(item => item.mal_id === anime.mal_id).length > 0;
+
+  const handleLike = () => {
+    if (isLiked) {
+      const newList = favAnime.filter(item => item.mal_id !== anime.mal_id);
+      setFavAnime(newList);
+    } else {
+      setFavAnime([...favAnime, anime]);
+    }
+  };
+
   return (
-    <div className="bg-slate-800/50 rounded-xl overflow-hidden border border-slate-700/30 
-                    hover:border-blue-500/20 transition-all duration-300 group">
-      <img 
-        src={anime.images.jpg.large_image_url} 
-        alt={anime.title}
-        className="w-full h-64 object-cover group-hover:scale-105 transition-all duration-500"
-      />
-      <div className="p-4 bg-gradient-to-b from-slate-800/80 to-slate-900/80">
-        <h3 className="text-white font-bold mb-2 group-hover:text-blue-400 transition-colors">
-          {anime.title_english || anime.title}
-        </h3>
+    <div className="bg-slate-800/50 rounded-xl overflow-hidden border border-slate-700/30">
+      <div className="relative">
+        <img 
+          src={anime.images.jpg.large_image_url} 
+          alt={anime.title}
+          className="w-full h-64 object-contain"
+          loading="lazy"
+        />
+        <button 
+          onClick={handleLike}
+          className="absolute top-2 right-2 p-2 bg-slate-900/50 rounded-full"
+        >
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            className={isLiked ? 'h-5 w-5 text-red-400' : 'h-5 w-5 text-gray-300'}
+            fill={isLiked ? 'currentColor' : 'none'}
+            viewBox="0 0 24 24" 
+            stroke="currentColor"
+          >
+            <path 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              strokeWidth={2} 
+              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" 
+            />
+          </svg>
+        </button>
+      </div>
+
+      <div className="p-4">
+        <h3 className="text-white font-bold mb-2">{anime.title_english || anime.title}</h3>
         <div className="flex justify-between items-center">
           <span className="text-blue-400">★ {anime.score}</span>
-          <span className="text-slate-400 text-sm">
-            Episodes: {anime.episodes || 'N/A'}
-          </span>
+          <span className="text-slate-400 text-sm">Episodes: {anime.episodes || 'N/A'}</span>
         </div>
       </div>
     </div>
@@ -30,20 +62,24 @@ function ListAnime() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
 
-  useEffect(() => {
+  const fetchAnimeList = (pageNum) => {
     setLoading(true);
-    // Add 1 second delay before fetching
     setTimeout(() => {
-      axios.get(`https://api.jikan.moe/v4/top/anime?page=${page}`)
+      axios.get(`https://api.jikan.moe/v4/top/anime?page=${pageNum}`)
         .then((res) => {
           setListAnime(res.data.data);
           setLoading(false);
         })
         .catch((err) => {
-          console.log(err);
-          setLoading(false);
+          console.error("Failed to fetch anime list:", err);
+          setTimeout(() => fetchAnimeList(pageNum), 5000);
         });
     }, 1000);
+  };
+
+  useEffect(() => {
+    fetchAnimeList(page);
+    return () => setLoading(false);
   }, [page]);
 
   return (

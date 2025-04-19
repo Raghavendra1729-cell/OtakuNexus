@@ -8,13 +8,23 @@ function Sliding() {
   const [index, setindex] = useState(0);
 
   useEffect(() => {
-    axios
-      .get("https://api.jikan.moe/v4/top/anime")
-      .then((res) => {
-        setList(res.data.data);
-        console.log(res.data.data);
-      })
-      .catch((err) => alert(err));
+    const timer = setTimeout(() => {
+      axios.get("https://api.jikan.moe/v4/top/anime")
+        .then((res) => {
+          setList(res.data.data);
+          console.log(res.data.data);
+        })
+        .catch((err) => {
+          console.error("Failed to fetch:", err);
+          setTimeout(() => {
+            axios.get("https://api.jikan.moe/v4/top/anime")
+              .then((res) => setList(res.data.data))
+              .catch((err) => console.error("Retry failed:", err));
+          }, 1000);
+        });
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {

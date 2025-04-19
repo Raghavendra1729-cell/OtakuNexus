@@ -15,7 +15,7 @@ function Searchbar() {
         .catch((err) => {
           console.error("Failed to fetch top anime");
         });
-    }, 2000); 
+    }, 150); 
   }, []);
 
   const handleSearch = (searchText) => {
@@ -37,7 +37,7 @@ function Searchbar() {
           setResult(res.data.data?.slice(0, 5) || []);
         })
         .catch((err) => console.error(err));
-    }, 1000); 
+    }, 333); 
 
     setTimer(newTimer);
   };
