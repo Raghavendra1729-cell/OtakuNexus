@@ -15,10 +15,10 @@ function Favpage() {
   );
 
   return (
-    <div className="px-8 py-12">
-      <div className="w-[80%] mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-blue-400">
+    <div className="px-4 lg:px-8 py-8 lg:py-12">
+      <div className="w-full lg:w-[80%] mx-auto">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+          <h2 className="text-2xl lg:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-blue-400">
             My Favorite Anime
           </h2>
           <input
@@ -26,7 +26,7 @@ function Favpage() {
             placeholder="Search favorites..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="px-4 py-2 bg-slate-800/50 text-white rounded-lg border border-slate-700/30 focus:outline-none focus:border-blue-500/50"
+            className="w-full sm:w-auto px-4 py-2 bg-slate-800/50 text-white rounded-lg border border-slate-700/30 focus:outline-none focus:border-blue-500/50"
           />
         </div>
 
@@ -35,7 +35,7 @@ function Favpage() {
             {searchTerm ? "No matches found" : "No favorites added yet"}
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
             {filteredAnime.map((anime) => (
               <div key={anime.mal_id} className="bg-slate-800/50 rounded-xl overflow-hidden border border-slate-700/30">
                 <div className="relative">

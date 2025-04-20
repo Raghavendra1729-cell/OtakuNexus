@@ -96,9 +96,9 @@ function ListAnime() {
   }, [page]);
 
   return (
-    <div className="px-8 pb-12">
-      <div className="w-[80%] mx-auto">
-        <h2 className="text-3xl font-bold text-transparent bg-clip-text 
+    <div className="px-4 lg:px-8 pb-12">
+      <div className="w-full lg:w-[80%] mx-auto">
+        <h2 className="text-2xl lg:text-3xl font-bold text-transparent bg-clip-text 
                       bg-gradient-to-r from-blue-200 to-blue-400 mb-8">
           Explore More Anime
         </h2>
@@ -107,13 +107,13 @@ function ListAnime() {
           <div className="text-blue-400 text-center py-12">Loading...</div>
         ) : (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
               {listAnime.map((anime) => (
                 <Card key={anime.mal_id} anime={anime} />
               ))}
             </div>
 
-            <div className="flex justify-center gap-4 mt-12">
+            <div className="flex flex-wrap justify-center gap-2 lg:gap-4 mt-8 lg:mt-12">
               <button
                 onClick={() => setPage(page - 1)}
                 disabled={page === 1}
