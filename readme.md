@@ -23,8 +23,8 @@ The application uses React Router DOM for navigation between three main componen
 - MyList
 - Recommendations
 
+<img width="1701" alt="Screenshot 2025-04-20 at 11 13 32 AM" src="https://github.com/user-attachments/assets/f8878dc9-2125-4436-bf7c-8835539dd1cd" />
 
-![Uploading Screenshot 2025-04-20 at 11.13.32 AM.png…]()
 
 
 
@@ -37,19 +37,43 @@ The Home page consists of four main components:
    - Displays spotlight anime that automatically slides every 4 seconds
    - Uses Jikan API to fetch top 25 spotlight anime
    - Implementation: Created a custom slider with useEffect and setTimeout
+  
+<img width="1354" alt="Screenshot 2025-04-20 at 11 20 28 AM" src="https://github.com/user-attachments/assets/5838978e-45c2-4550-8baf-a9a7d1c475c5" />
+
+
+
+
+
 
 2. **Search Bar**
    - Features debounce search that activates 500ms after user input
    - Shows top 5 search results instantly
    - Implementation: Built with useState and useEffect for debounce functionality
+  
+
+
+<img width="331" alt="Screenshot 2025-04-20 at 11 21 19 AM" src="https://github.com/user-attachments/assets/858dc8c9-3f18-4aae-afa1-a62c5b1c9776" />
+
+
 
 3. **Explore More Anime**
    - Displays top 25 anime in card format
    - Implementation: Created AnimeCard components to display data from Jikan page API
+  
+
+<img width="1698" alt="Screenshot 2025-04-20 at 11 22 03 AM" src="https://github.com/user-attachments/assets/24a9643c-eb66-41bb-b8c9-609c9ab4435d" />
+
+
+
+
 
 4. **Pagination**
    - Navigate through multiple pages of anime listings
    - Implementation: Custom pagination component with page navigation controls
+  
+<img width="347" alt="Screenshot 2025-04-20 at 11 22 22 AM" src="https://github.com/user-attachments/assets/10e9c94f-0dfc-49fc-8393-0f0a2b9eea0c" />
+
+
 
 ### MyList Page
 - Stores liked anime using React Context
@@ -57,10 +81,18 @@ The Home page consists of four main components:
 - Includes delete feature to remove anime from favorites
 - Implementation: Used Context API to manage state across components
 
+<img width="1710" alt="Screenshot 2025-04-20 at 11 30 41 AM" src="https://github.com/user-attachments/assets/e624683c-3198-49c3-b2da-b117a5512dbe" />
+
+
 ### Recommendations Page
 - Generates anime recommendations based on user's top 3 favorite anime
 - Uses Jikan recommendation API for intelligent suggestions
 - Implementation: Analyzes user preferences through Context and fetches tailored recommendations
+
+
+
+<img width="1710" alt="Screenshot 2025-04-20 at 11 33 19 AM" src="https://github.com/user-attachments/assets/11344499-c43e-4735-be94-68c47d5ac2e1" />
+
 
 ## Tech Stack
 - **Frontend**: React.js
