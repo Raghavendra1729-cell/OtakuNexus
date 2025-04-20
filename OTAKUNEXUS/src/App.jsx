@@ -21,8 +21,8 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/mylist" element={<Favpage />} />
-              <Route path="/ai" element={<AiRecom />} /> {/* Updated path */}
-              <Route path="/recommendations" element={<AiRecom />} /> {/* Keep this as alternative */}
+              <Route path="/ai" element={<AiRecom />} /> 
+              <Route path="/recommendations" element={<AiRecom />} />
             </Routes>
           </div>
         </div>
