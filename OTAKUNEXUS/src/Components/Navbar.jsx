@@ -8,7 +8,7 @@ function Navbar() {
   const navItems = [
     { name: "Home", path: "/" },
     { name: "MyList", path: "/mylist" },
-    { name: "AI Anime Recommendation", path: "/ai" }
+    { name: "AI Recommendations", path: "/ai" }
   ];
 
   return (

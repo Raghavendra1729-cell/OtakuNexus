@@ -4,6 +4,7 @@ import './index.css';
 import Home from './Pages/HomePage/Home';
 import Favpage from './Pages/FavPage/Favpage';
 import Navbar from './Components/Navbar';
+import AiRecom from './Pages/AiRecom/AiRecom';
 
 export const FavContext = createContext();
 
@@ -20,6 +21,8 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/mylist" element={<Favpage />} />
+              <Route path="/ai" element={<AiRecom />} /> {/* Updated path */}
+              <Route path="/recommendations" element={<AiRecom />} /> {/* Keep this as alternative */}
             </Routes>
           </div>
         </div>
