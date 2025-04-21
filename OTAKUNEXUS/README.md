@@ -36,7 +36,7 @@ The Home page consists of four main components:
 1. **Sliding Top Anime**
    - Displays spotlight anime that automatically slides every 4 seconds
    - Uses Jikan API to fetch top 25 spotlight anime
-   - Implementation: Created a custom slider with useEffect and setTimeout
+   - Implementation: Created a custom slider with useEffect and setInterval
   
 <img width="1354" alt="Screenshot 2025-04-20 at 11 20 28 AM" src="https://github.com/user-attachments/assets/5838978e-45c2-4550-8baf-a9a7d1c475c5" />
 
